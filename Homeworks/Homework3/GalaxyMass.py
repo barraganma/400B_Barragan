@@ -3,22 +3,24 @@ import astropy.units as u
 from astropy.table import Table
 from ReadFile import Read
 
+# Create a function that outputs the total mass of each particle of a desired particle type (1=DarkMatter,2=DiskStars,3=BulgeStars)
+
 def ComponentMass(filename,ptype):
     # Inputs:
     #    filename is the name of the text file
     #    ptype is the number that represents the particle type (1=DarkMatter,2=DiskStars,3=BulgeStars)
     # Return:
-    #    totmass is the total mass of the galaxy component dictated my ptype (Msun*10e12)
-    
+    #    mtot is the total mass of the galaxy component dictated my ptype (Msun*10e12)
+
     # Function from "ReadFile.py" used to store time, number of particles and data from the file.
     # Only data is needed, which stores the desired values (type, mass, distance and velocity in x,y,z) for each particle
     time,particlenumber,data = Read(filename)
 
     # Filter out all other types
     index = np.where(data['type'] == ptype)
-    
+
     # Create a new list of values for the filtered type
-    # Store new values of mass
+    # Store new values of mass (10e10 Msun)
     mnew = data['m'][index]
 
     # Sum all elemants of mass and store
@@ -29,7 +31,7 @@ def ComponentMass(filename,ptype):
 
 # Store Names
 name = ['MW','M31','M33','Local Group']
-    
+
 # Store total component masses of MW
 MWhalo =     ComponentMass('MW_000.txt',1)
 MWdisk =     ComponentMass('MW_000.txt',2)
@@ -73,3 +75,34 @@ t = Table([name,halo,disk,bulge,tot,fbar], names=('Galaxy Name','Halo Mass (10^1
 print(t)
 
 
+# -----------------Questions----------------------------
+
+# 1)How does the total mass of the MW and M31 compare in this simulation? What galaxy component dominates this total mass?
+MassRatio = np.around(MWtot/M31tot,3)
+print("Questions:")
+print("\n1)")
+print("Mass ratio of MW vs M31: ", MassRatio)
+print("The dark matter dominates the total mass.")
+
+# 2)How does the stellar mass of the MW and M31 compare in this simulation?
+StellarRatio = np.around(MWstellar/M31stellar,3)
+print("\n2)")
+print("Stellar mass ratio of MW vs M31: ",StellarRatio)
+print("MW should be more luminous.")
+
+# 3)How does the total dark matter mass of the MW and M31 compare in this simulation? Is it surprising, given their difference in stellar mass?
+DarkRatio = np.around(MWhalo/M31halo,3)
+print("\n3)")
+print("Dark matter mass ratio of MW vs M31: ",DarkRatio)
+print("This is surprising given their difference in stellar mass. \nM31 has much more stellar mass than MW yet has similar dark matter masses.")
+
+# 4)What is the ratio of stellar mass to total mass for each galaxy? In the Universe, 16% of all mass is locked up in baryons vs darkmatter.
+# How does this ratio compare to the baryon fraction you computed for each galaxy? Given that the total mass in the disks of these galaxies
+# is negligible compared to the stellar mass, any ideas why the universal baryon fraction might differ from that in these galaxies?
+print("\n4)")
+print("Baryon fractions:")
+print("MW  ",MWfbar)
+print("M31 ",M31fbar)
+print("M33 ",M33fbar)
+print("These are all much smaller that the Universe's 16%")
+print("There is a LOT more dark matter than baryon matter in the Universe.")
