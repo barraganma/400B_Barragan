@@ -1,0 +1,47 @@
+Research Assignment 3: 
+Project: Tidal transformation of M33
+Evolution of the internal stellar structure of M33
+
+Marco Barragan
+ASTR400B
+
+Here I will outline the current notable issues and progress:
+-DiskProfileMovie uses code from Collin (from his pdf on Slack) and 
+ Lab 7 in order to save plots of the 2d profiles & contours and use 
+ those PNG's to make a movie (with ffmpeg).
+
+-DiskThickness uses Lab 7 code primarily to rotate the coordinates 
+ to make them level with the plane of the galaxy. This code is made 
+ to find the (average) thickness of M33 in order to plot those numbers 
+ into a static thickness vs time plot 
+
+-I am currently having issues with ffpmeg. I am still learning to use 
+ it and will consult Collin if he has the time
+
+-I want to make the mp4 movie that has a plot layout similar to Collin's 
+ movie posted on Slack. I want 3 plots (face on, 2 edge on) and the empty 
+ space with a dynamic snap id. I am currently having some difficulty adding 
+ the contour, and with adding labels. But for now The plots are there and 
+ are together.
+
+-Finding the disk thickness is gonna be a bit more difficult. I am 
+currently focusing on the mp4 first, and this after. But forseeable issues 
+are boundaries, what to display, and how to calculate thickness.
+---When looking at the plots for these galaxies we see that there are some 
+   outliers. This sort of provides an issue with finding thickness. My solution 
+   would be to find some sort of filter at a certain number of sigma and filter 
+   out a good amount of outlier particles. This could possible make my values 
+   smaller, but hopefully they will be dynamically accurate.
+---The simplest way to display this would be to use the total average 
+   thickness of the disk and plot it for each snap id. Another option would be 
+   to plot another dynamic plot where we make bins for chunks of phi amgles and 
+   plot the average thickness for quadrants. But I will worry about that after 
+   I get the first idea down.
+---If I am to use particles, my first idea to find H would be to find the 
+   surface area of the upper and lowermost particles in the disk (which is why 
+   sigmas would help) and finding the spacing between the two.
+
+-I have another idea where I plot the maxima of disk radii (fitted into an ellipse 
+ to and plot them per snap id to see the change in the ovaloid shape (rather than 
+ just the particles.
+
